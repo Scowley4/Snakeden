@@ -10,4 +10,8 @@ class Sprite(pg.sprite.Sprite):
     def update(self):
         pass
 
+    def shoot(self):
+        """Fireballs"""
+        pass
+
 
