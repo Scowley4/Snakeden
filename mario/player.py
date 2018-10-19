@@ -1,3 +1,5 @@
+import pygame as pg
+
 class Sprite(pg.sprite.Sprite):
     """A Sprite Class"""
     def __init__(self):
