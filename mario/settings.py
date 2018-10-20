@@ -12,6 +12,13 @@ CYAN = (0, 255, 255)
 # game settings
 WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
 HEIGHT = 768  # 16 * 48 or 32 * 24 or 64 * 12
+# 256 wide by 240 high
+
+# 16 pixel blocks
+# WIDTH = 256 # 16 blocks
+# HEIGHT = 240 # 15 blocks
+
+
 FPS = 60
 TITLE = ""
 
