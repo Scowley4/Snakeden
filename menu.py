@@ -31,11 +31,12 @@ class Menu:
                 if event.type == pg.QUIT:
                     self.at_menu = False
                 if event.type == pg.KEYDOWN:
-                    self.change_sound.play()
                     if event.key == pg.K_DOWN:
+                        self.change_sound.play()
                         mario = False
                         self.game_choice = "s&l"
                     if event.key == pg.K_UP:
+                        self.change_sound.play()
                         mario = True
                         self.game_choice = "mario"
                     if event.key == pg.K_RETURN:
