@@ -19,6 +19,7 @@ class Menu:
         self.dir = path.dirname(__file__)
         self.img_dir = path.join(self.dir, 'img')
         self.snd_dir = path.join(self.dir, 'snd')
+        self.change_sound = pg.mixer.Sound(path.join(self.snd_dir, "menu_change.wav"))
 
     def start_screen(self):
         pg.mixer.music.load(path.join(self.snd_dir, 'menu.ogg'))
@@ -30,6 +31,7 @@ class Menu:
                 if event.type == pg.QUIT:
                     self.at_menu = False
                 if event.type == pg.KEYDOWN:
+                    self.change_sound.play()
                     if event.key == pg.K_DOWN:
                         mario = False
                         self.game_choice = "s&l"
@@ -51,14 +53,14 @@ class Menu:
         self.draw_text("Shoots and Ladders", 64, settings.GREEN, 'arial',
                        settings.WIDTH/2, settings.HEIGHT * 3/4 - 20)
         if game:
-            # left
+            # left coin
             self.draw_image('coin.png', settings.WIDTH * 7/8, settings.HEIGHT * 5/12, 3)
-            # right
+            # right coin
             self.draw_image('coin.png', settings.WIDTH * 1/8, settings.HEIGHT * 5/12, 3)
         else:
-            # left
+            # left coin
             self.draw_image('coin.png', settings.WIDTH * 7/8, settings.HEIGHT * 8/12 + 25, 3)
-            # right
+            # right coin
             self.draw_image('coin.png', settings.WIDTH * 1/8, settings.HEIGHT * 8/12 + 25, 3)
         pg.display.flip()
 
