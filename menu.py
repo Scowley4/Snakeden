@@ -83,8 +83,9 @@ class Menu:
         self.screen.blit(img, img_rect)
 
 
-menu = Menu()
-choice = menu.start_screen()
-print(choice)
-pg.QUIT
+if __name__ == '__main__':
+    menu = Menu()
+    choice = menu.start_screen()
+    print(choice)
+    pg.QUIT
 
