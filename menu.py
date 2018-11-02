@@ -40,6 +40,7 @@ class Menu:
                         mario = True
                         self.game_choice = "mario"
                     if event.key == pg.K_RETURN:
+                        pg.mixer.music.stop()
                         return self.game_choice
 
             self.show_menu(mario)
