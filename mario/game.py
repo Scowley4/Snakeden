@@ -2,7 +2,7 @@ import pygame as pg
 from random import choice, random
 import sys
 import os
-from settings import *
+from . import settings
 
 
 #Move to settings
@@ -11,7 +11,7 @@ class Game:
     """Mario game object"""
     def __init__(self):
         # Set up screen
-        self.screen = pg.display.set_mode((WIDTH, HEIGHT))
+        self.screen = pg.display.set_mode((1000, 800))#WIDTH, HEIGHT
 
         # Set up caption
         pg.display.set_caption('MARIO')
@@ -36,7 +36,7 @@ class Game:
         # Loop the music
         # pg.mixer.music.play(loops=-1)
         while self.playing:
-            self.dt = self.clock.tick(FPS)/1000
+            self.dt = self.clock.tick(40)/1000#40 FPS
             self.events()
             if not self.paused:
                 self.update()
@@ -64,6 +64,15 @@ class Game:
         pass
 
 
+
+def start():
+    # Init pygame
+    pg.init()
+    # Init mixer
+    pg.mixer.init()
+    game = Game()
+    game.run()
+        
 if __name__ == '__main__':
     # Init pygame
     pg.init()
