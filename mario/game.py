@@ -1,4 +1,5 @@
 import pygame as pg
+from . import main_menu
 from random import choice, random
 import sys
 import os
@@ -33,6 +34,9 @@ class Game:
 
     def run(self):
         self.playing = True
+        menu = main_menu.MainMenu()
+        selection = menu.show_screen()
+        print(selection)
         # Loop the music
         # pg.mixer.music.play(loops=-1)
         while self.playing:
