@@ -63,8 +63,7 @@ class SubMenus:
         self.screen.blit(self.mario, self.mario_rect)
         self.draw_text('x  ' + str(lives), sett.WHITE, sett.WIDTH * 0.51, sett.HEIGHT * 0.51)
         pg.display.flip()
-        pg.time.wait(500)
-
+        pg.time.wait(800)
 
     def time_up_screen(self, score, coins, world, level):
         self.screen.fill(sett.BLACK)
@@ -77,5 +76,5 @@ class SubMenus:
         self.draw_stats(score, coins, world, level, None)
         self.draw_text('GAME OVER', sett.WHITE, sett.WIDTH * 0.40, sett.HEIGHT * 0.50)
         pg.display.flip()
-
+        # add busy loop to wait for input
 
