@@ -38,8 +38,8 @@ class Game:
         menu = main_menu.MainMenu()
         selection = menu.show_screen()
         print(selection)
-        sub_screen = sub_menus.SubMenus()
-        sub_screen.draw_level_screen(0, 0, 1, 1, 400, 3)
+        self.sub_screen = sub_menus.SubMenus()
+        self.sub_screen.draw_level_screen(0, 0, 1, 1, 400, 3)
         # Loop the music
         # pg.mixer.music.play(loops=-1)
         while self.playing:
@@ -67,6 +67,7 @@ class Game:
     def draw(self):
         self.screen.fill(settings.BLACK)
         self.all_sprites.draw(self.screen)
+        self.sub_screen.draw_stats(0, 0, 1, 1, 400)
         pg.display.flip()
 
     def events(self):

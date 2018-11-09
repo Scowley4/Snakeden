@@ -53,7 +53,7 @@ class SubMenus:
         self.draw_text('TIME', sett.WHITE, sett.WIDTH * 0.80, sett.HEIGHT * 0.01)
         if time is not None:
             self.draw_text(str(time), sett.WHITE, sett.WIDTH * 0.81, sett.HEIGHT * 0.05)
-        pg.display.flip()
+        #pg.display.flip()
 
     def draw_level_screen(self,score, coins, world, level, time, lives):
         self.screen.fill(sett.BLACK)
@@ -63,6 +63,8 @@ class SubMenus:
         self.screen.blit(self.mario, self.mario_rect)
         self.draw_text('x  ' + str(lives), sett.WHITE, sett.WIDTH * 0.51, sett.HEIGHT * 0.51)
         pg.display.flip()
+        pg.time.wait(500)
+
 
     def time_up_screen(self, score, coins, world, level):
         self.screen.fill(sett.BLACK)
