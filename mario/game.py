@@ -4,6 +4,7 @@ from random import choice, random
 import sys
 import os
 from . import settings
+from . import mario
 
 
 #Move to settings
@@ -53,22 +54,43 @@ class Game:
         sys.exit()
 
     def update(self):
-        pass
+        self.all_sprites.update()
+        hits = pg.sprite.spritecollide(self.mario, self.platforms, False)
+        if hits:
+            if self.mario.rect.top > hits[0].rect.top:
+                self.mario.pos.y = hits[0].rect.bottom - (self.mario.rect.top - self.mario.pos.y)
+                self.mario.vel.y = 0
+            elif self.mario.pos.y < hits[0].rect.bottom:
+                self.mario.pos.y = hits[0].rect.top
+                self.mario.vel.y = 0
 
     def draw(self):
-        pass
+        self.screen.fill(settings.BLACK)
+        self.all_sprites.draw(self.screen)
+        pg.display.flip()
 
     def events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.quit()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_SPACE:
+                    self.mario.jump()
 
     def new(self):
-        pass
+        self.all_sprites = pg.sprite.Group()
+        self.platforms = pg.sprite.Group()
+
+        self.mario = mario.Mario(self)
+        self.all_sprites.add(self.mario)
+
+        for plat in settings.PLATFORM_LIST:
+            p = mario.Platform(*plat)
+            self.all_sprites.add(p)
+            self.platforms.add(p)
 
     def load_level(self):
         pass
-
 
 
 def start():
@@ -77,6 +99,7 @@ def start():
     # Init mixer
     pg.mixer.init()
     game = Game()
+    game.new()
     game.run()
         
 if __name__ == '__main__':
@@ -87,6 +110,7 @@ if __name__ == '__main__':
     pg.mixer.init()
 
     game = Game()
+    game.new()
     game.run()
 
 

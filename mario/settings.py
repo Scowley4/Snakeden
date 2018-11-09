@@ -28,3 +28,18 @@ TILESIZE = 64
 GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
+# starting platforms
+PLATFORM_LIST = [(0, HEIGHT - 200, WIDTH * 1/3, 30),
+                 (WIDTH * 1/3, HEIGHT - 300, WIDTH * 1/3, 30),
+                 (WIDTH * 2/3, HEIGHT - 200, WIDTH * 1/3, 30),
+                 (WIDTH * 1/3, HEIGHT - 400, WIDTH * 1/20, 30),
+                 (WIDTH * 1/3 + 100, HEIGHT - 400, WIDTH * 1/20, 30),
+                 (WIDTH * 1/3 + 200, HEIGHT - 400, WIDTH * 1/20, 30)]
+
+# mario properties
+SIZE_MULTIPLIER = 2.5
+MARIO_ACC = 0.5
+MARIO_FRICTION = -0.12
+GRAVITY = 0.5
+
+
