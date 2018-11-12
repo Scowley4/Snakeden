@@ -2,9 +2,10 @@ import pygame as pg
 from . import main_menu, sub_menus
 from random import choice, random
 import sys
-import os
+from os import path
 from . import settings
 from . import mario
+from . import tilemap
 
 
 #Move to settings
@@ -27,9 +28,12 @@ class Game:
 
     def load_data(self):
         # Set up folder
-
+        game_folder = path.dirname(__file__)
+        map_folder = path.join(game_folder, 'tiledlevels')
         # Load images
-
+        self.map = tilemap.TiledMap(path.join(map_folder, 'LevelOneMap.tmx'))
+        self.map_img = self.map.make_map()
+        self.map_rect = self.map_img.get_rect()
         # Load sounds
         pass
 
@@ -43,7 +47,7 @@ class Game:
         # Loop the music
         # pg.mixer.music.play(loops=-1)
         while self.playing:
-            self.dt = self.clock.tick(40)/1000#40 FPS
+            self.dt = self.clock.tick(20)/1000#40 FPS
             self.events()
             if not self.paused:
                 self.update()
@@ -55,6 +59,7 @@ class Game:
 
     def update(self):
         self.all_sprites.update()
+        self.camera.update(self.mario)
         hits = pg.sprite.spritecollide(self.mario, self.platforms, False)
         if hits:
             if self.mario.rect.top > hits[0].rect.top:
@@ -66,6 +71,7 @@ class Game:
 
     def draw(self):
         self.screen.fill(settings.BLACK)
+        #self.screen.blit(self.map_img, self.camera.apply_rect(self.map_rect))
         self.all_sprites.draw(self.screen)
         self.sub_screen.draw_stats(0, 0, 1, 1, 400)
         pg.display.flip()
@@ -90,6 +96,8 @@ class Game:
             self.all_sprites.add(p)
             self.platforms.add(p)
 
+        self.camera = tilemap.Camera(self.map.width, self.map.height)
+
     def load_level(self):
         pass
 
@@ -102,7 +110,7 @@ def start():
     game = Game()
     game.new()
     game.run()
-        
+
 if __name__ == '__main__':
     # Init pygame
     pg.init()
@@ -113,5 +121,3 @@ if __name__ == '__main__':
     game = Game()
     game.new()
     game.run()
-
-

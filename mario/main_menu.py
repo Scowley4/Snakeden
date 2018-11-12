@@ -130,6 +130,3 @@ if __name__ == '__main__':
     start = MainMenu()
     start.show_screen()
     pg.quit()
-
-
-

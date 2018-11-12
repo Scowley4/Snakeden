@@ -77,4 +77,3 @@ class SubMenus:
         self.draw_text('GAME OVER', sett.WHITE, sett.WIDTH * 0.40, sett.HEIGHT * 0.50)
         pg.display.flip()
         # add busy loop to wait for input
-

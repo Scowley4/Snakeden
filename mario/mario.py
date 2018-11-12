@@ -45,11 +45,6 @@ class Mario(pg.sprite.Sprite):
         self.acc.x += self.vel.x * settings.MARIO_FRICTION
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
-        # wrap around the sides of the screen
-        if self.pos.x > settings.WIDTH:
-            self.pos.x = 0
-        if self.pos.x < 0:
-            self.pos.x = settings.WIDTH
 
         self.rect.midbottom = self.pos
 
