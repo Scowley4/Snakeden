@@ -18,7 +18,7 @@ class Mario(pg.sprite.Sprite):
         self.image = self.get_image(178, 32, 12, 16)
         self.rect = self.image.get_rect()
 
-        self.pos = vec(settings.WIDTH * 1/6, settings.HEIGHT / 2)
+        self.pos = vec(settings.WIDTH * 1/6, settings.HEIGHT * .1)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
@@ -43,13 +43,22 @@ class Mario(pg.sprite.Sprite):
         # defines the motion of Mario
         # no friction in the y direction
         self.acc.x += self.vel.x * settings.MARIO_FRICTION
+
         self.vel += self.acc
+        if abs(self.vel.x) < .1:
+            self.vel.x = 0
+
+        if self.vel.y > settings.MAX_DOWN:
+            self.vel.y = settings.DOWN_RESET
         self.pos += self.vel + 0.5 * self.acc
         # wrap around the sides of the screen
         if self.pos.x > settings.WIDTH:
             self.pos.x = 0
         if self.pos.x < 0:
             self.pos.x = settings.WIDTH
+
+        print(self.vel)
+        print(self.acc)
 
         self.rect.midbottom = self.pos
 
@@ -59,8 +68,9 @@ class Mario(pg.sprite.Sprite):
 
         image.blit(self.sprite_sheet, (0, 0), (x, y, width, height))
         image.set_colorkey(settings.BLACK)
-        image = pg.transform.scale(image, (int(rect.width * settings.SIZE_MULTIPLIER),
-                                           int(rect.height * settings.SIZE_MULTIPLIER)))
+        image = pg.transform.scale(image, (int(rect.width * settings.SCALE),
+                                           int(rect.height * settings.SCALE)))
+        print(image.get_rect().width)
         return image
 
 
@@ -73,3 +83,6 @@ class Platform(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+
+
