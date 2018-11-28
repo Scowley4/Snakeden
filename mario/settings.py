@@ -28,21 +28,32 @@ MID_Y = HEIGHT / 2
 FPS = 60
 TITLE = ""
 
-PIXELSIZE = 4
 
-TILESIZE = 64
-TILESIZE = 16*PIXELSIZE
-GRIDWIDTH = WIDTH / TILESIZE
-GRIDHEIGHT = HEIGHT / TILESIZE
 
+#GRIDWIDTH = WIDTH / TILESIZE
+#GRIDHEIGHT = HEIGHT / TILESIZE
+
+# Could scale up or down with this???
 SIZE = 1
+
+# Each pixel in the image turns into this many pixels in the game
 PIXELSIZE = 4
-SCALE = SIZE * PIXELSIZE
-TILESIZE = SIZE * PIXELSIZE * 16
+
+# The ammount to scale each image
+SCALE = int(SIZE * PIXELSIZE)
+
+# Tiles are 16x16 pixels
+TILESIZE = int(SIZE * PIXELSIZE * 16)
+
+# Screen is 16 tiles wide
 TILE_W = 16
+
+# Screen is 15 tiles tall
 TILE_H = 15
-WIDTH = TILE_W * TILESIZE
-HEIGHT = TILE_H * TILESIZE
+
+# Total width and height of the screen (in modern pixels)
+WIDTH = int(TILE_W * TILESIZE)
+HEIGHT = int(TILE_H * TILESIZE)
 
 
 # starting platforms
