@@ -57,8 +57,8 @@ class Mario(pg.sprite.Sprite):
         if self.pos.x < 0:
             self.pos.x = settings.WIDTH
 
-        print(self.vel)
-        print(self.acc)
+        # print(self.vel)
+        # print(self.acc)
 
         self.rect.midbottom = self.pos
 

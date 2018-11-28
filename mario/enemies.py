@@ -59,6 +59,11 @@ class Enemy(pg.sprite.Sprite):
         # I think enemies in mario only have a fixed velocity.
 
         self.acc.x += self.vel.x * settings.MARIO_FRICTION
+        #####
+        # Turned of mob movement for testing
+        self.acc.x = 0
+        self.acc.y = 0
+        #####
         if abs(self.vel.x) < 0.1:
             self.vel.x = 0
         if abs(self.vel.y) < .1:

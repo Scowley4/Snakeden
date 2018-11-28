@@ -121,10 +121,10 @@ class Game:
         self.mario = mario.Mario(self)
         self.all_sprites.add(self.mario)
 
-        #enemies = [Goomba(self), DudeGoomba(self),
-        #           KoopaTroopa(self), BuzzyBeetle(self),
-        #           Bowser(self)]
-        enemies = [Goomba(self)]
+        enemies = [Goomba(self), DudeGoomba(self),
+                   KoopaTroopa(self), BuzzyBeetle(self),
+                   Bowser(self)]
+        # enemies = [Goomba(self)]
         for enemy in enemies:
             self.all_sprites.add(enemy)
             self.enemies.add(enemy)
