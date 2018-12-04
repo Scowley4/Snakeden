@@ -6,6 +6,7 @@ from os import path
 from . import settings
 from . import mario
 from . import tilemap
+from .enemies import *
 
 
 #Move to settings
@@ -14,7 +15,8 @@ class Game:
     """Mario game object"""
     def __init__(self):
         # Set up screen
-        self.screen = pg.display.set_mode((1000, 800))#WIDTH, HEIGHT
+        self.screen = pg.display.set_mode((settings.WIDTH, settings.HEIGHT)) #WIDTH, HEIGHT
+        print(f'Init screen as {settings.WIDTH}x{settings.HEIGHT}')
 
         # Set up caption
         pg.display.set_caption('MARIO')
@@ -47,7 +49,7 @@ class Game:
         # Loop the music
         # pg.mixer.music.play(loops=-1)
         while self.playing:
-            self.dt = self.clock.tick(20)/1000#40 FPS
+            self.dt = self.clock.tick(settings.FPS)/1000 #40 FPS
             self.events()
             if not self.paused:
                 self.update()
@@ -69,12 +71,45 @@ class Game:
                 self.mario.pos.y = hits[0].rect.top
                 self.mario.vel.y = 0
 
+
     def draw(self):
-        self.screen.fill(settings.BLACK)
         #self.screen.blit(self.map_img, self.camera.apply_rect(self.map_rect))
+        self.screen.fill(settings.LIGHTGREY)
         self.all_sprites.draw(self.screen)
         self.sub_screen.draw_stats(0, 0, 1, 1, 400)
+        self.draw_fine_grid()
         pg.display.flip()
+
+    def draw_fine_grid(self, show_major=True, show_minor=True):
+        skip = settings.TILESIZE//2
+        major = skip*2
+        minor = skip
+        width = 1
+        major_c = settings.BLACK
+        minor_c = settings.MEDGREY
+        for x in range(0, settings.WIDTH, skip):
+            if show_major and (x % major)==0:
+                pg.draw.line(self.screen, major_c, (x, 0), (x, settings.HEIGHT), width)
+            else:
+                if show_minor:
+                    pg.draw.line(self.screen, minor_c, (x, 0), (x, settings.HEIGHT), width)
+        for y in range(0, settings.HEIGHT, skip):
+            if show_major and (y % major)==0:
+                pg.draw.line(self.screen, major_c, (0, y), (settings.WIDTH, y), width)
+            else:
+                if show_minor:
+                    pg.draw.line(self.screen, minor_c, (0, y), (settings.WIDTH, y), width)
+        y = 896
+        pg.draw.line(self.screen, settings.RED, (0, y), (settings.WIDTH, y), 1)
+
+    def draw_grid(self, color):
+        lines = []
+        for x in range(0, settings.WIDTH, settings.TILESIZE):
+            pg.draw.line(self.screen, color, (x, 0), (x, settings.HEIGHT))
+            for y in range(0, settings.HEIGHT, settings.TILESIZE):
+                pg.draw.line(self.screen, color, (0, y), (settings.WIDTH, y))
+                lines.append((x,y))
+        #print(lines)
 
     def events(self):
         for event in pg.event.get():
@@ -87,11 +122,20 @@ class Game:
     def new(self):
         self.all_sprites = pg.sprite.Group()
         self.platforms = pg.sprite.Group()
+        self.enemies = pg.sprite.Group()
 
         self.mario = mario.Mario(self)
         self.all_sprites.add(self.mario)
 
-        for plat in settings.PLATFORM_LIST:
+        enemies = [Goomba(self), DudeGoomba(self),
+                   KoopaTroopa(self), BuzzyBeetle(self),
+                   Bowser(self)]
+        # enemies = [Goomba(self)]
+        for enemy in enemies:
+            self.all_sprites.add(enemy)
+            self.enemies.add(enemy)
+
+        for plat in settings.PLATFORM_TILES:
             p = mario.Platform(*plat)
             self.all_sprites.add(p)
             self.platforms.add(p)
