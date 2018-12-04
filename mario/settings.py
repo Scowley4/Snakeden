@@ -37,7 +37,7 @@ TITLE = ""
 SIZE = 1
 
 # Each pixel in the image turns into this many pixels in the game
-PIXELSIZE = 4
+PIXELSIZE = 2
 
 # The ammount to scale each image
 SCALE = int(SIZE * PIXELSIZE)
@@ -60,7 +60,7 @@ HEIGHT = int(TILE_H * TILESIZE)
 # Specified by tiles
                 #   x,  y,  w,  h
 PLATFORM_LIST = [
-                 (  0,  14, 16,  1),
+                 (  0,  14, 160,  1),
                  (  5,  12,  3,  1),
                  (  7,  10,  3,  1),
                  (  9,   8,  3,  1),

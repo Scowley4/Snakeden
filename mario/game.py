@@ -34,8 +34,17 @@ class Game:
         map_folder = path.join(game_folder, 'tiledlevels')
         # Load images
         self.map = tilemap.TiledMap(path.join(map_folder, 'LevelOneMap.tmx'))
+
+        # Get map and rect
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
+
+        # Scale map and get rect again
+        self.map_img = pg.transform.scale(self.map_img,
+                      (self.map_rect.width*int(settings.SCALE),
+                    self.map_rect.height*int(settings.SCALE)))
+        self.map_rect = self.map_img.get_rect()
+        print(self.map_rect)
         # Load sounds
         pass
 
@@ -73,8 +82,8 @@ class Game:
 
 
     def draw(self):
-        #self.screen.blit(self.map_img, self.camera.apply_rect(self.map_rect))
-        self.screen.fill(settings.LIGHTGREY)
+        self.screen.blit(self.map_img, self.camera.apply_rect(self.map_rect))
+        #self.screen.fill(settings.LIGHTGREY)
         self.all_sprites.draw(self.screen)
         self.sub_screen.draw_stats(0, 0, 1, 1, 400)
         self.draw_fine_grid()
@@ -139,6 +148,15 @@ class Game:
             p = mario.Platform(*plat)
             self.all_sprites.add(p)
             self.platforms.add(p)
+
+        TILESIZE = settings.TILESIZE
+        for brick in self.map.tmxdata.get_layer_by_name('block_object_layer'):
+            p = mario.Platform(brick.x, brick.y, TILESIZE, TILESIZE)
+            self.platforms.add(p)
+            self.all_sprites.add(p)
+        for obj in self.map.tmxdata.objects:
+            print(obj)
+            print(obj.name)
 
         self.camera = tilemap.Camera(self.map.width, self.map.height)
 
