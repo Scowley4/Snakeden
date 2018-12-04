@@ -51,11 +51,6 @@ class Mario(pg.sprite.Sprite):
         if self.vel.y > settings.MAX_DOWN:
             self.vel.y = settings.DOWN_RESET
         self.pos += self.vel + 0.5 * self.acc
-        # wrap around the sides of the screen
-        if self.pos.x > settings.WIDTH:
-            self.pos.x = 0
-        if self.pos.x < 0:
-            self.pos.x = settings.WIDTH
 
         # print(self.vel)
         # print(self.acc)

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="supa mario bros 2 baybeee.tsx"/>
+ <object type="question_block" gid="25" width="16" height="16">
+  <properties>
+   <property name="has_coin" type="bool" value="false"/>
+   <property name="has_item" type="bool" value="false"/>
+  </properties>
+ </object>
+</template>

@@ -2,9 +2,10 @@ import pygame as pg
 from . import main_menu, sub_menus
 from random import choice, random
 import sys
-import os
+from os import path
 from . import settings
 from . import mario
+from . import tilemap
 from .enemies import *
 
 
@@ -29,9 +30,12 @@ class Game:
 
     def load_data(self):
         # Set up folder
-
+        game_folder = path.dirname(__file__)
+        map_folder = path.join(game_folder, 'tiledlevels')
         # Load images
-
+        self.map = tilemap.TiledMap(path.join(map_folder, 'LevelOneMap.tmx'))
+        self.map_img = self.map.make_map()
+        self.map_rect = self.map_img.get_rect()
         # Load sounds
         pass
 
@@ -57,6 +61,7 @@ class Game:
 
     def update(self):
         self.all_sprites.update()
+        self.camera.update(self.mario)
         hits = pg.sprite.spritecollide(self.mario, self.platforms, False)
         if hits:
             if self.mario.rect.top > hits[0].rect.top:
@@ -68,6 +73,7 @@ class Game:
 
 
     def draw(self):
+        #self.screen.blit(self.map_img, self.camera.apply_rect(self.map_rect))
         self.screen.fill(settings.LIGHTGREY)
         self.all_sprites.draw(self.screen)
         self.sub_screen.draw_stats(0, 0, 1, 1, 400)
@@ -134,6 +140,8 @@ class Game:
             self.all_sprites.add(p)
             self.platforms.add(p)
 
+        self.camera = tilemap.Camera(self.map.width, self.map.height)
+
     def load_level(self):
         pass
 
@@ -157,5 +165,3 @@ if __name__ == '__main__':
     game = Game()
     game.new()
     game.run()
-
-
