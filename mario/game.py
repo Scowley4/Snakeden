@@ -173,13 +173,18 @@ class Game:
             self.platforms.add(p)
 
         TILESIZE = settings.TILESIZE
-        for brick in self.map.tmxdata.get_layer_by_name('block_object_layer'):
-            p = mario.Platform(brick.x*settings.SCALE,
-                               brick.y*settings.SCALE,
-                               TILESIZE, TILESIZE,
-                               settings.BLUE)
-            self.platforms.add(p)
-            self.all_sprites.add(p)
+        # TODO The layers are not consistantly named in the files.
+        #      Try/except here for when we try to run level 2
+        try:
+            for brick in self.map.tmxdata.get_layer_by_name('block_object_layer'):
+                p = mario.Platform(brick.x*settings.SCALE,
+                                   brick.y*settings.SCALE,
+                                   TILESIZE, TILESIZE,
+                                   settings.BLUE)
+                self.platforms.add(p)
+                self.all_sprites.add(p)
+        except:
+            pass
         for obj in self.map.tmxdata.objects:
             print(obj)
             print(obj.name)

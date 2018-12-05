@@ -35,10 +35,15 @@ TITLE = ""
 #GRIDHEIGHT = HEIGHT / TILESIZE
 
 # Could scale up or down with this???
+# !!!!!!
+# FIXME DONT USE THIS!!!!!!
+# SEE PIXELSIZE
 SIZE = 1
 
 # Each pixel in the image turns into this many pixels in the game
-PIXELSIZE = 4
+# Currently you can scale the game size with this.
+# Recommended values are 1, 2, 4. Can experiment with others
+PIXELSIZE = 2
 
 # The ammount to scale each image
 SCALE = int(SIZE * PIXELSIZE)
