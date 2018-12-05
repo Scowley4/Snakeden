@@ -43,7 +43,7 @@ SIZE = 1
 # Each pixel in the image turns into this many pixels in the game
 # Currently you can scale the game size with this.
 # Recommended values are 1, 2, 4. Can experiment with others
-PIXELSIZE = 2
+PIXELSIZE = 4
 
 # The ammount to scale each image
 SCALE = int(SIZE * PIXELSIZE)

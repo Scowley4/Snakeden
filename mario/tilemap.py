@@ -37,13 +37,21 @@ class Camera:
     def apply(self, entity):
         return entity.rect.move(self.camera.topleft)
 
+    def screen_to_true(self, pos):
+        return (pos[0] - self.camera.left, pos[1] - self.camera.top)
+
+    def apply_pos(self, pos):
+        return (pos[0] + self.camera.left, pos[1] + self.camera.top)
+
     # apply the offset to a rectangle
     def apply_rect(self, rect):
         return rect.move(self.camera.topleft)
 
     def update(self, target):
         x = -target.rect.centerx + int(settings.WIDTH * .5)
-        y = -target.rect.bottom + int(settings.HEIGHT * .85)
+
+                                        # Not sure about this 2.....
+        y = -target.rect.bottom + int(settings.HEIGHT * 13/15 + 2)
 
         x = min(0, x)
         y = min(0, y)

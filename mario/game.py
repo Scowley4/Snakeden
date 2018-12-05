@@ -6,18 +6,40 @@ from os import path
 from . import settings
 from . import mario
 from . import tilemap
+from . import item_sprites
 from .enemies import *
 
+# DEBUG controls the drawing of debugging tools:
+# - Grid
+# - Mouse position (screen-relative and map-relative (truepos))
+DEBUG = True
 
 font_name = pg.font.match_font('arial')
 
-def draw_text(surface, text, size, color, x, y):
+def draw_text(surface, text, size, color, x, y, align='nw'):
     font = pg.font.Font(font_name, size)
     text_surf = font.render(str(text), True, color)
     text_rect = text_surf.get_rect()
-    text_rect.midtop = (x, y)
+    if align == 'nw':
+        text_rect.topleft = (x, y)
+    if align == 'ne':
+        text_rect.topright = (x, y)
+    if align == 'sw':
+        text_rect.bottomleft = (x, y)
+    if align == 'se':
+        text_rect.bottomright = (x, y)
+    if align == 'n':
+        text_rect.midtop = (x, y)
+    if align == 's':
+        text_rect.midbottom = (x, y)
+    if align == 'e':
+        text_rect.midright = (x, y)
+    if align == 'w':
+        text_rect.midleft = (x, y)
+    if align == 'center':
+        text_rect.center = (x, y)
     surface.blit(text_surf, text_rect)
-#Move to settings
+
 
 class Game:
     """Mario game object"""
@@ -96,15 +118,35 @@ class Game:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
         #self.all_sprites.draw(self.screen)
         self.sub_screen.draw_stats(0, 0, 1, 1, 400)
+
+
+
+
+        if DEBUG:
+            self._draw_debug()
+        pg.display.flip()
+
+    def _draw_debug(self):
         self.draw_fine_grid()
 
         #def draw_text(surface, text, size, color, x, y):
+        draw_text(self.screen, 'Screen', 16, settings.WHITE, 100, 100)
+        draw_text(self.screen, 'TruePos', 16, settings.WHITE, 200, 100)
+
+
+        draw_text(self.screen, 'Pixel', 16, settings.WHITE, 20, 120)
         mouse_pos = pg.mouse.get_pos()
         draw_text(self.screen, str(mouse_pos),
-                  16, settings.WHITE, 500, 10)
+                  16, settings.WHITE, 100, 120)
         draw_text(self.screen, self.get_tile_pos(*mouse_pos),
-                  16, settings.WHITE, 500, 30)
-        pg.display.flip()
+                  16, settings.WHITE, 100, 140)
+
+        true_pos = self.camera.screen_to_true(mouse_pos)
+        draw_text(self.screen, 'Tile', 16, settings.WHITE, 20, 140)
+        draw_text(self.screen, str(true_pos),
+                  16, settings.WHITE, 200, 120)
+        draw_text(self.screen, self.get_tile_pos(*true_pos),
+                  16, settings.WHITE, 200, 140)
 
     def get_tile_pos(self, x, y):
         pix = settings.TILESIZE
@@ -155,6 +197,7 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.platforms = pg.sprite.Group()
         self.enemies = pg.sprite.Group()
+        self.qblocks = pg.sprite.Group()
 
         self.mario = mario.Mario(self)
         self.all_sprites.add(self.mario)
@@ -166,6 +209,15 @@ class Game:
         for enemy in enemies:
             self.all_sprites.add(enemy)
             self.enemies.add(enemy)
+
+        qblock = item_sprites.QBlock(self, (500, 500))
+        self.all_sprites.add(qblock)
+
+        brick = item_sprites.Brick(self, (100, 800))
+        self.all_sprites.add(brick)
+
+        brick = item_sprites.Brick(self, (300, 800))
+        self.all_sprites.add(brick)
 
         for plat in settings.PLATFORM_TILES:
             p = mario.Platform(*plat, hidden=True)
