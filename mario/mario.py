@@ -71,10 +71,12 @@ class Mario(pg.sprite.Sprite):
 
 class Platform(pg.sprite.Sprite):
 
-    def __init__(self, x, y, w, h, color=settings.GREEN):
+    def __init__(self, x, y, w, h, color=settings.GREEN, hidden=False):
         pg.sprite.Sprite.__init__(self)
         self.image = pg.Surface((w, h))
         self.image.fill(color)
+        if hidden:
+            self.image.set_colorkey(color)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

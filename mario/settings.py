@@ -62,9 +62,9 @@ HEIGHT = int(TILE_H * TILESIZE)
                 #   x,  y,  w,  h
 PLATFORM_LIST = [
                  (  0,  16, 160,  1),
-                 (  5,  12,  3,  1),
-                 (  7,  10,  3,  1),
-                 (  9,   8,  3,  1),
+                # (  5,  12,  3,  1),
+                # (  7,  10,  3,  1),
+                # (  9,   8,  3,  1),
                  ]
 PLATFORM_TILES = [tuple(val*TILESIZE for val in plat) for plat in PLATFORM_LIST]
 

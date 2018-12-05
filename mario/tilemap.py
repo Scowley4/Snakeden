@@ -43,7 +43,7 @@ class Camera:
 
     def update(self, target):
         x = -target.rect.centerx + int(settings.WIDTH * .5)
-        y = -target.rect.centery + int(settings.HEIGHT * .75)
+        y = -target.rect.bottom + int(settings.HEIGHT * .85)
 
         x = min(0, x)
         y = min(0, y)

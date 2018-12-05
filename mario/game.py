@@ -9,6 +9,14 @@ from . import tilemap
 from .enemies import *
 
 
+font_name = pg.font.match_font('arial')
+
+def draw_text(surface, text, size, color, x, y):
+    font = pg.font.Font(font_name, size)
+    text_surf = font.render(str(text), True, color)
+    text_rect = text_surf.get_rect()
+    text_rect.midtop = (x, y)
+    surface.blit(text_surf, text_rect)
 #Move to settings
 
 class Game:
@@ -89,7 +97,20 @@ class Game:
         #self.all_sprites.draw(self.screen)
         self.sub_screen.draw_stats(0, 0, 1, 1, 400)
         self.draw_fine_grid()
+
+        #def draw_text(surface, text, size, color, x, y):
+        mouse_pos = pg.mouse.get_pos()
+        draw_text(self.screen, str(mouse_pos),
+                  16, settings.WHITE, 500, 10)
+        draw_text(self.screen, self.get_tile_pos(*mouse_pos),
+                  16, settings.WHITE, 500, 30)
         pg.display.flip()
+
+    def get_tile_pos(self, x, y):
+        pix = settings.TILESIZE
+        tile_x = x//pix
+        tile_y = y//pix
+        return tile_x, tile_y
 
     def draw_fine_grid(self, show_major=True, show_minor=True):
         skip = settings.TILESIZE//2
@@ -147,13 +168,14 @@ class Game:
             self.enemies.add(enemy)
 
         for plat in settings.PLATFORM_TILES:
-            p = mario.Platform(*plat)
+            p = mario.Platform(*plat, hidden=True)
             self.all_sprites.add(p)
             self.platforms.add(p)
 
         TILESIZE = settings.TILESIZE
         for brick in self.map.tmxdata.get_layer_by_name('block_object_layer'):
-            p = mario.Platform(brick.x*settings.SCALE, brick.y*settings.SCALE,
+            p = mario.Platform(brick.x*settings.SCALE,
+                               brick.y*settings.SCALE,
                                TILESIZE, TILESIZE,
                                settings.BLUE)
             self.platforms.add(p)
