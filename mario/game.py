@@ -6,7 +6,7 @@ from os import path
 from . import settings
 from . import mario
 from . import tilemap
-from . import item_sprites
+from . import map_sprites
 from .enemies import *
 
 # DEBUG controls the drawing of debugging tools:
@@ -210,13 +210,13 @@ class Game:
             self.all_sprites.add(enemy)
             self.enemies.add(enemy)
 
-        qblock = item_sprites.QBlock(self, (500, 500))
+        qblock = map_sprites.QBlock(self, (500, 500))
         self.all_sprites.add(qblock)
 
-        brick = item_sprites.Brick(self, (100, 800))
+        brick = map_sprites.Brick(self, (100, 800))
         self.all_sprites.add(brick)
 
-        brick = item_sprites.Brick(self, (300, 800))
+        brick = map_sprites.Brick(self, (300, 800))
         self.all_sprites.add(brick)
 
         for plat in settings.PLATFORM_TILES:
