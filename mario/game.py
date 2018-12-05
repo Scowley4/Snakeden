@@ -212,12 +212,15 @@ class Game:
 
         qblock = map_sprites.QBlock(self, (500, 500))
         self.all_sprites.add(qblock)
+        self.platforms.add(qblock)
 
         brick = map_sprites.Brick(self, (100, 800))
         self.all_sprites.add(brick)
+        self.platforms.add(brick)
 
         brick = map_sprites.Brick(self, (300, 800))
         self.all_sprites.add(brick)
+        self.platforms.add(brick)
 
         for plat in settings.PLATFORM_TILES:
             p = mario.Platform(*plat, hidden=True)
@@ -228,16 +231,25 @@ class Game:
         # TODO The layers are not consistantly named in the files.
         #      Try/except here for when we try to run level 2
         try:
-            for brick in self.map.tmxdata.get_layer_by_name('block_object_layer'):
-                p = mario.Platform(brick.x*settings.SCALE,
-                                   brick.y*settings.SCALE,
-                                   TILESIZE, TILESIZE,
-                                   settings.BLUE)
+            for block in self.map.tmxdata.get_layer_by_name('block_object_layer'):
+                if block.template == 'brick_template.tx':
+                    p = map_sprites.Brick(self,
+                                          (block.x*settings.SCALE,
+                                           block.y*settings.SCALE))
+                # p = mario.Platform(brick.x*settings.SCALE,
+                #                    brick.y*settings.SCALE,
+                #                    TILESIZE, TILESIZE,
+                #                    settings.BLUE)
+                else:
+                    p = map_sprites.QBlock(self,
+                                          (block.x*settings.SCALE,
+                                           block.y*settings.SCALE))
                 self.platforms.add(p)
                 self.all_sprites.add(p)
         except:
             pass
         for obj in self.map.tmxdata.objects:
+            pass
             print(obj)
             print(obj.name)
 

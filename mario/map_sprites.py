@@ -11,6 +11,8 @@ class MapSprite(pg.sprite.Sprite):
         self.game = game
         self.img_dir = path.join(self.dir, 'img')
 
+        # Init rect before first image
+        self.rect = pg.rect.Rect(pos, (16,16))
         self.pos = vec(*pos)
 
         self.last_anim_update = 0
