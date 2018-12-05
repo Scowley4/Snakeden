@@ -29,7 +29,7 @@ class Mario(pg.sprite.Sprite):
         self.rect.y -= 1
         # if there is something below us
         if hits:
-            self.vel.y = -12
+            self.vel.y = -8*settings.SCALE
 
     def update(self):
         # 0.5 creates gravity each frame
@@ -71,10 +71,10 @@ class Mario(pg.sprite.Sprite):
 
 class Platform(pg.sprite.Sprite):
 
-    def __init__(self, x, y, w, h):
+    def __init__(self, x, y, w, h, color=settings.GREEN):
         pg.sprite.Sprite.__init__(self)
         self.image = pg.Surface((w, h))
-        self.image.fill(settings.GREEN)
+        self.image.fill(color)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

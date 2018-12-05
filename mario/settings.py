@@ -1,14 +1,15 @@
 # define some colors (R, G, B)
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-DARKGREY = (40, 40, 40)
-MEDGREY = (70, 70, 70)
+WHITE =     (255, 255, 255)
+BLACK =     (  0,   0,   0)
+DARKGREY =  ( 40,  40,  40)
+MEDGREY =   ( 70,  70,  70)
 LIGHTGREY = (100, 100, 100)
-GREEN = (0, 255, 0)
-RED = (255, 0, 0)
-YELLOW = (255, 255, 0)
-BROWN = (106, 55, 5)
-CYAN = (0, 255, 255)
+RED =       (255,   0,   0)
+GREEN =     (  0, 255,   0)
+BLUE =      (  0,   0, 255)
+YELLOW =    (255, 255,   0)
+BROWN =     (106,  55,   5)
+CYAN =      (  0, 255, 255)
 
 # game settings
 WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
@@ -37,7 +38,7 @@ TITLE = ""
 SIZE = 1
 
 # Each pixel in the image turns into this many pixels in the game
-PIXELSIZE = 2
+PIXELSIZE = 4
 
 # The ammount to scale each image
 SCALE = int(SIZE * PIXELSIZE)
@@ -60,7 +61,7 @@ HEIGHT = int(TILE_H * TILESIZE)
 # Specified by tiles
                 #   x,  y,  w,  h
 PLATFORM_LIST = [
-                 (  0,  14, 160,  1),
+                 (  0,  16, 160,  1),
                  (  5,  12,  3,  1),
                  (  7,  10,  3,  1),
                  (  9,   8,  3,  1),

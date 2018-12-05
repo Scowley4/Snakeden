@@ -84,7 +84,9 @@ class Game:
     def draw(self):
         self.screen.blit(self.map_img, self.camera.apply_rect(self.map_rect))
         #self.screen.fill(settings.LIGHTGREY)
-        self.all_sprites.draw(self.screen)
+        for sprite in self.all_sprites:
+            self.screen.blit(sprite.image, self.camera.apply(sprite))
+        #self.all_sprites.draw(self.screen)
         self.sub_screen.draw_stats(0, 0, 1, 1, 400)
         self.draw_fine_grid()
         pg.display.flip()
@@ -151,14 +153,17 @@ class Game:
 
         TILESIZE = settings.TILESIZE
         for brick in self.map.tmxdata.get_layer_by_name('block_object_layer'):
-            p = mario.Platform(brick.x, brick.y, TILESIZE, TILESIZE)
+            p = mario.Platform(brick.x*settings.SCALE, brick.y*settings.SCALE,
+                               TILESIZE, TILESIZE,
+                               settings.BLUE)
             self.platforms.add(p)
             self.all_sprites.add(p)
         for obj in self.map.tmxdata.objects:
             print(obj)
             print(obj.name)
 
-        self.camera = tilemap.Camera(self.map.width, self.map.height)
+        self.camera = tilemap.Camera(self.map.width*settings.SCALE,
+                                     self.map.height*settings.SCALE)
 
     def load_level(self):
         pass
@@ -169,6 +174,7 @@ def start():
     pg.init()
     # Init mixer
     pg.mixer.init()
+    pg.mixer.pause()
     game = Game()
     game.new()
     game.run()
