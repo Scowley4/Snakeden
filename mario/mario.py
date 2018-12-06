@@ -15,12 +15,22 @@ class Mario(pg.sprite.Sprite):
         self.sprite_sheet = pg.image.load(path.join(self.img_dir, 'mario_bros.png'))
 
         # single image from sprite, to start
-        self.image = self.get_image(178, 32, 12, 16)
+        self.load_images()
+        self.image = self.standing_frames[0]
         self.rect = self.image.get_rect()
 
         self.pos = vec(settings.WIDTH * 1/6, settings.HEIGHT * .8)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
+
+    def load_images(self):
+        self.standing_frames = [self.get_image(178, 32, 12, 16),
+                                pg.transform.flip(self.get_image(178, 32, 12, 16), True, False)]
+        for frame in self.standing_frames:
+            frame.set_colorkey(settings.BLACK)
+
+        self.walk_frames_r = [self.get_image(80, 32, 15, 17), self.get_image(95, 32, 15, 17),
+                              self.get_image(114, 32, 15, 16)]
 
     def reset(self):
         self.pos = vec(settings.WIDTH * 1/6, settings.HEIGHT * .8)

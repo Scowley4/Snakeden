@@ -50,7 +50,7 @@ class MainMenu:
         self.title_rect.midtop = (sett.MID_X, sett.HEIGHT / 9)
 
     def set_mario(self):
-        self.mario = self.get_image(self.spritesheet_mario, 177, 32, 15, 16, 0.2)
+        self.mario = self.get_image(self.spritesheet_mario, 178, 32, 12, 16, 0.2)
         self.mario.set_colorkey(sett.BLACK)
         self.mario_rect = self.mario.get_rect()
         self.mario_rect.midbottom = (self.ground_x + 100, self.ground_y - 105)
