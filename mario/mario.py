@@ -69,7 +69,7 @@ class Mario(pg.sprite.Sprite):
                 self.last_update = now
                 self.current_frame = (self.current_frame + 1) % len(self.walk_frames_r)
                 bottom = self.rect.bottom
-                if self.vel.x < 0:
+                if self.vel.x > 0:
                     self.image = self.walk_frames_r[self.current_frame]
                 else:
                     self.image = self.walk_frames_l[self.current_frame]
