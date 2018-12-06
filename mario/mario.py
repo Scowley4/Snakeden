@@ -18,7 +18,12 @@ class Mario(pg.sprite.Sprite):
         self.image = self.get_image(178, 32, 12, 16)
         self.rect = self.image.get_rect()
 
-        self.pos = vec(settings.WIDTH * 1/6, settings.HEIGHT * .1)
+        self.pos = vec(settings.WIDTH * 1/6, settings.HEIGHT * .8)
+        self.vel = vec(0, 0)
+        self.acc = vec(0, 0)
+
+    def reset(self):
+        self.pos = vec(settings.WIDTH * 1/6, settings.HEIGHT * .8)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
@@ -76,6 +81,7 @@ class Platform(pg.sprite.Sprite):
         self.image = pg.Surface((w, h))
         self.image.fill(color)
         if hidden:
+
             self.image.set_colorkey(color)
         self.rect = self.image.get_rect()
         self.rect.x = x

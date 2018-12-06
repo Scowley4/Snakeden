@@ -66,7 +66,7 @@ HEIGHT = int(TILE_H * TILESIZE)
 # Specified by tiles
                 #   x,  y,  w,  h
 PLATFORM_LIST = [
-                 (  0,  16, 160,  1),
+                # (  0,  16, 160,  1),
                 # (  5,  12,  3,  1),
                 # (  7,  10,  3,  1),
                 # (  9,   8,  3,  1),
@@ -76,7 +76,7 @@ PLATFORM_TILES = [tuple(val*TILESIZE for val in plat) for plat in PLATFORM_LIST]
 
 # mario properties
 SIZE_MULTIPLIER = 2.5
-MARIO_ACC = 0.5
+MARIO_ACC = 1.5
 MARIO_FRICTION = -0.12
 GRAVITY = PIXELSIZE * 7/16
 MAX_DOWN = 4.5 * PIXELSIZE

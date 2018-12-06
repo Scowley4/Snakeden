@@ -119,10 +119,9 @@ class Game:
         #self.all_sprites.draw(self.screen)
         self.sub_screen.draw_stats(0, 0, 1, 1, 400)
 
-
-
-
         if DEBUG:
+            if self.mario.pos.y > 1500:
+                self.mario.reset()
             self._draw_debug()
         pg.display.flip()
 
@@ -147,6 +146,10 @@ class Game:
                   16, settings.WHITE, 200, 120)
         draw_text(self.screen, self.get_tile_pos(*true_pos),
                   16, settings.WHITE, 200, 140)
+
+        # for block in self.platforms:
+        #     pg.draw.rect(self.screen, settings.BLUE,
+        #                  camera.apply_rect(block.rect))
 
     def get_tile_pos(self, x, y):
         pix = settings.TILESIZE
@@ -247,11 +250,32 @@ class Game:
                 self.platforms.add(p)
                 self.all_sprites.add(p)
         except:
+            print('No block_object_layer')
             pass
-        for obj in self.map.tmxdata.objects:
+        try:
+            for obj in self.map.tmxdata.get_layer_by_name('solid_layer'):
+                p = mario.Platform(obj.x*settings.SCALE,
+                                   obj.y*settings.SCALE,
+                                   obj.width*settings.SCALE,
+                                   obj.height*settings.SCALE,
+                                   hidden=True)
+                self.platforms.add(p)
+                self.all_sprites.add(p)
+        except Exception as e:
+            print(e)
+
+            print('No solid_layer')
             pass
-            print(obj)
-            print(obj.name)
+
+        try:
+            for block in self.map.tmxdata.get_layer_by_name('asdf'):
+                continue
+        except Exception as e:
+            print(e)
+
+        #for obj in self.map.tmxdata.objects:
+        #    print(obj)
+        #    print(obj.name)
 
         self.camera = tilemap.Camera(self.map.width*settings.SCALE,
                                      self.map.height*settings.SCALE)
