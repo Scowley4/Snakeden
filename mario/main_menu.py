@@ -95,7 +95,7 @@ class MainMenu:
                         pg.mixer.music.fadeout(1000)
                         return self.selection
             self.draw_menu()
-        pg.mixer.music.fadeout(1000)
+        pg.mixer.music.stop()
         return 'exit'
 
     def draw_menu(self):

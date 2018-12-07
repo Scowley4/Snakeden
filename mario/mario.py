@@ -25,6 +25,7 @@ class Mario(pg.sprite.Sprite):
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
         self.jumping = False
+        self.right = True
 
     def load_images(self):
         self.standing_frame_l = self.get_image(178, 32, 12, 16)
@@ -38,6 +39,7 @@ class Mario(pg.sprite.Sprite):
         for frame in self.walk_frames_l:
             frame.set_colorkey(settings.BLACK)
             self.walk_frames_r.append(pg.transform.flip(frame, True, False))
+
         self.jump_frame_l = self.get_image(144, 32, 16, 16)
         self.jump_frame_l.set_colorkey(settings.BLACK)
 
@@ -56,6 +58,7 @@ class Mario(pg.sprite.Sprite):
         # if there is something below us
         if hits:
             self.jumping = True
+            self.game.jump_sound.play()
             self.vel.y = -8*settings.SCALE
 
     def animate(self):
@@ -65,14 +68,36 @@ class Mario(pg.sprite.Sprite):
         else:
             self.walking = False
         if self.walking:
-            if now - self.last_update > 100:
+            if now - self.last_update > 120:
                 self.last_update = now
                 self.current_frame = (self.current_frame + 1) % len(self.walk_frames_r)
                 bottom = self.rect.bottom
-                if self.vel.x > 0:
+                if self.vel.x < 0:
                     self.image = self.walk_frames_r[self.current_frame]
+                    self.right = True
                 else:
                     self.image = self.walk_frames_l[self.current_frame]
+                    self.right = False
+                self.rect = self.image.get_rect()
+                self.rect.bottom = bottom
+        if self.jumping:
+            if now - self.last_update > 50:
+                self.last_update = now
+                if self.right:
+                    self.image = self.jump_frame_r
+                else:
+                    self.image = self.jump_frame_l
+                bottom = self.rect.bottom
+                self.rect = self.image.get_rect()
+                self.rect.bottom = bottom
+        if not self.jumping and not self.walking:
+            if now - self.last_update > 250:
+                self.last_update = now
+                if self.right:
+                    self.image = self.standing_frame_r
+                else:
+                    self.image = self.standing_frame_l
+                bottom = self.rect.bottom
                 self.rect = self.image.get_rect()
                 self.rect.bottom = bottom
 

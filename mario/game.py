@@ -62,6 +62,9 @@ class Game:
         # Set up folder
         game_folder = path.dirname(__file__)
         map_folder = path.join(game_folder, 'tiledlevels')
+        self.snd_dir = path.join(game_folder, 'snd')
+        self.music_dir = path.join(game_folder, 'music')
+        self.jump_sound = pg.mixer.Sound(path.join(self.snd_dir, 'big_jump.ogg'))
         # Load images
         self.map = tilemap.TiledMap(path.join(map_folder, 'LevelOneMap.tmx'))
 
@@ -86,7 +89,8 @@ class Game:
         self.sub_screen = sub_menus.SubMenus()
         self.sub_screen.draw_level_screen(0, 0, 1, 1, 400, 3)
         # Loop the music
-        # pg.mixer.music.play(loops=-1)
+        pg.mixer.music.load(path.join(self.music_dir, 'main_theme.ogg'))
+        pg.mixer.music.play(loops=-1)
         while self.playing:
             self.dt = self.clock.tick(settings.FPS)/1000 #40 FPS
             self.events()
@@ -103,6 +107,7 @@ class Game:
         self.camera.update(self.mario)
         hits = pg.sprite.spritecollide(self.mario, self.platforms, False)
         if hits:
+            self.mario.jumping = False
             if self.mario.rect.top > hits[0].rect.top:
                 self.mario.pos.y = hits[0].rect.bottom - (self.mario.rect.top - self.mario.pos.y)
                 self.mario.vel.y = 0
