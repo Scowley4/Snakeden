@@ -106,14 +106,14 @@ class Game:
         self.all_sprites.update()
         self.camera.update(self.mario)
         hits = pg.sprite.spritecollide(self.mario, self.platforms, False)
-        if hits:
-            self.mario.jumping = False
-            if self.mario.rect.top > hits[0].rect.top:
-                self.mario.pos.y = hits[0].rect.bottom - (self.mario.rect.top - self.mario.pos.y)
-                self.mario.vel.y = 0
-            elif self.mario.pos.y < hits[0].rect.bottom:
-                self.mario.pos.y = hits[0].rect.top
-                self.mario.vel.y = 0
+        #if hits:
+        #    self.mario.jumping = False
+        #    if self.mario.rect.top > hits[0].rect.top:
+        #        self.mario.pos.y = hits[0].rect.bottom - (self.mario.rect.top - self.mario.pos.y)
+        #        self.mario.vel.y = 0
+        #    elif self.mario.pos.y < hits[0].rect.bottom:
+        #        self.mario.pos.y = hits[0].rect.top
+        #        self.mario.vel.y = 0
 
 
     def draw(self):
@@ -131,7 +131,7 @@ class Game:
         pg.display.flip()
 
     def _draw_debug(self):
-        self.draw_fine_grid()
+        self.draw_fine_grid(show_minor=False)
 
         #def draw_text(surface, text, size, color, x, y):
         draw_text(self.screen, 'Screen', 16, settings.WHITE, 100, 100)
@@ -218,17 +218,17 @@ class Game:
             self.all_sprites.add(enemy)
             self.enemies.add(enemy)
 
-        qblock = map_sprites.QBlock(self, (500, 500))
-        self.all_sprites.add(qblock)
-        self.platforms.add(qblock)
+        # qblock = map_sprites.QBlock(self, (500, 500))
+        # self.all_sprites.add(qblock)
+        # self.platforms.add(qblock)
 
-        brick = map_sprites.Brick(self, (100, 800))
-        self.all_sprites.add(brick)
-        self.platforms.add(brick)
+        # brick = map_sprites.Brick(self, (100, 800))
+        # self.all_sprites.add(brick)
+        # self.platforms.add(brick)
 
-        brick = map_sprites.Brick(self, (300, 800))
-        self.all_sprites.add(brick)
-        self.platforms.add(brick)
+        # brick = map_sprites.Brick(self, (300, 800))
+        # self.all_sprites.add(brick)
+        # self.platforms.add(brick)
 
         for plat in settings.PLATFORM_TILES:
             p = mario.Platform(*plat, hidden=True)

@@ -118,15 +118,45 @@ class Mario(pg.sprite.Sprite):
         self.vel += self.acc
         if abs(self.vel.x) < .1:
             self.vel.x = 0
+        self.pos.x += self.vel.x + 0.5 * self.acc.x
+        self.pos.x = int(self.pos.x)
+        self.rect.midbottom = self.pos
+        self.collide('x')
 
         if self.vel.y > settings.MAX_DOWN:
             self.vel.y = settings.DOWN_RESET
-        self.pos += self.vel + 0.5 * self.acc
-
-        # print(self.vel)
-        # print(self.acc)
+        self.pos.y += self.vel.y + 0.5 * self.acc.y
+        self.pos.y = int(self.pos.y)
+        self.rect.midbottom = self.pos
+        self.collide('y')
 
         self.rect.midbottom = self.pos
+
+    def collide(self, direction):
+        #print('collide', direction)
+        platforms = self.game.platforms
+        if direction == 'x':
+            # print(self.rect.collidelistall(platforms))
+            hits = pg.sprite.spritecollide(self, platforms, False, False)
+            if hits:
+                block = hits[0]
+                if self.vel.x > 0:
+                    self.pos.x = (block.rect.left-self.rect.width/2)
+                if self.vel.x < 0:
+                    self.pos.x = (block.rect.right+self.rect.width/2)
+                self.vel.x = 0
+
+        if direction == 'y':
+            hits = pg.sprite.spritecollide(self, platforms, False, False)
+            if hits:
+                block = hits[0]
+                if self.vel.y > 0:
+                    self.pos.y = block.rect.top
+                    self.jumping = False
+                if self.vel.y < 0:
+                    self.pos.y = (block.rect.bottom + self.rect.height)
+                self.vel.y = 0
+
 
     def get_image(self, x, y, width, height):
         image = pg.Surface([width, height])
